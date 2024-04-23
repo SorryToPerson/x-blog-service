@@ -1,14 +1,13 @@
-
-const AdminService = require('../service/AdminService');
+const ArticleService = require('../service/ArticleService');
 const response = require('../utils/response');
-class AdminController {
+class ArticleController {
   /**
    * 获得管理员列表分页数据
    * @param {Context} ctx
    */
-  getAdminList(req, res) {
+  getArticleList(req, res) {
     const { limit, page } = req.body;
-    AdminService.getAdminListPage({ limit, page })
+    ArticleService.getArticleListPage({ limit, page })
       .then((result) => {
         res.json(response.success(result, 'success', 200));
       })
@@ -21,22 +20,22 @@ class AdminController {
    * 新增数据
    * @param {Context} ctx
    */
-  async addAdmin(req, res) {
-    const { body: admin } = req;
-    const isAdmin = await AdminService.getAdminByName(admin.account);
+  async addArticle(req, res) {
+    const { body: Article } = req;
+    const isArticle = await ArticleService.getArticleByName(Article.account);
 
-    if (isAdmin.length) {
+    if (isArticle.length) {
       res.json(
-        response.error(`新增用户${isAdmin[0].account}已存在！`, null, 200)
+        response.error(`新增用户${isArticle[0].account}已存在！`, null, 200),
       );
       return;
     }
-    AdminService.addAdminInfo([
+    ArticleService.addArticleInfo([
       Math.floor(Math.random() * 10000 - 1),
-      admin.account,
-      admin.password,
-      admin.email,
-      admin.weight,
+      Article.account,
+      Article.password,
+      Article.email,
+      Article.weight,
     ])
       .then(() => {
         res.json(response.success(null, 'success', 200));
@@ -50,9 +49,9 @@ class AdminController {
    * 更新数据
    * @param {Context} ctx
    */
-  updateAdmin(req, res) {
-    const { body: admin } = req;
-    AdminService.updateAdmin(admin)
+  updateArticle(req, res) {
+    const { body: Article } = req;
+    ArticleService.updateArticle(Article)
       .then((result) => {
         res.json(response.success(null, 'success', 200));
       })
@@ -65,9 +64,9 @@ class AdminController {
    * 删除数据
    * @param {Context} ctx
    */
-  deleteAdmin(req, res) {
+  deleteArticle(req, res) {
     const { id } = req.body;
-    AdminService.delAdmin(id)
+    ArticleService.delArticle(id)
       .then(() => {
         res.json(response.success(null, 'success', 200));
       })
@@ -80,9 +79,9 @@ class AdminController {
    * 模糊查询管理员信息
    * @param ctx 上下文
    */
-  getAdminDim(req, res) {
+  getArticleDim(req, res) {
     const { account } = req.query;
-    AdminService.getAdminByAccount(account)
+    ArticleService.getArticleByAccount(account)
       .then((result) => {
         res.json(response.success(result, 'success', 200));
       })
@@ -95,9 +94,9 @@ class AdminController {
    * 修改管理员登录权限
    * @param ctx 上下文
    */
-  editAdminInfo(req, res) {
+  editArticleInfo(req, res) {
     const { body } = req;
-    AdminService.editAdminInfo(body)
+    ArticleService.editArticleInfo(body)
       .then((result) => {
         res.json(response.success(null, 'success', 200));
       })
@@ -106,4 +105,4 @@ class AdminController {
       });
   }
 }
-module.exports = new AdminController();
+module.exports = new ArticleController();

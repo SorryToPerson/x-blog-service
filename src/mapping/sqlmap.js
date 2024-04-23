@@ -27,6 +27,34 @@ const sqlmap = {
     },
   },
 
+  Article: {
+    articleDel: (id) => {
+      return `delete from article where id = ${id}`;
+    },
+    articleAdd: (data) => {
+      return `insert into article (id,account,password,email,weight) values (${data
+        .map((item) => `'${item}'`)
+        .join(',')})`;
+    },
+    articleByAccount: (account) => {
+      return `select id,account,password,email,weight from article where account like '%${account}%'`;
+    },
+    articleNameQuery: (account) => {
+      return `select id,account,password,email,weight from article where account = '${account}'`;
+    },
+    articleUpdate: (data) => {
+      return `
+        update article set account = '${data.account}',password = '${data.password}',
+        email = '${data.email}',weight = ${data.weight} where id = '${data.id}'
+      `;
+    },
+    articleUpdateActive: (data) => {
+      return `
+      update article set weight = ${data.weight} where id = '${data.id}'
+    `;
+    },
+  },
+
   /**
    * 分页查询
    * @param {number} page 查询页数
@@ -39,5 +67,5 @@ const sqlmap = {
     return `select * from ${table} limit ${limit} offset ${offset}`;
   },
 };
-const {  Admin, pagingQuery } = sqlmap;
-module.exports = { Admin, pagingQuery };
+const { Admin, Article, pagingQuery } = sqlmap;
+module.exports = { Admin, Article, pagingQuery };

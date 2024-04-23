@@ -1,4 +1,4 @@
-const { pagingQuery , Admin} = require('../mapping/sqlmap');
+const { pagingQuery, Admin } = require('../mapping/sqlmap');
 const connectionQuery = require('../utils/connectionQuery');
 class AdminService {
   /**
@@ -9,7 +9,7 @@ class AdminService {
    */
   getAdminListPage(data) {
     return connectionQuery(
-      pagingQuery(Number(data.page), Number(data.limit), 'admin')
+      pagingQuery(Number(data.page), Number(data.limit), 'admin'),
     );
   }
 
