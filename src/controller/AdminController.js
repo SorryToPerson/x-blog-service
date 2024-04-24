@@ -1,4 +1,3 @@
-
 const AdminService = require('../service/AdminService');
 const response = require('../utils/response');
 class AdminController {
@@ -27,7 +26,7 @@ class AdminController {
 
     if (isAdmin.length) {
       res.json(
-        response.error(`新增用户${isAdmin[0].account}已存在！`, null, 200)
+        response.error(`新增用户${isAdmin[0].account}已存在！`, null, 200),
       );
       return;
     }

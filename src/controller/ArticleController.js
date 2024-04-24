@@ -12,6 +12,7 @@ class ArticleController {
         res.json(response.success(result, 'success', 200));
       })
       .catch((err) => {
+        console.log(err);
         res.json(response.error(err.code, null, err.errno));
       });
   }
